@@ -1,26 +1,7 @@
 version: '3.8'
 
 services:
-  app:
-    phanes:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      restart: on-failure
-      platform: linux/x86_64
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-    environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=myapp
-    networks:
-      - backend
-
+  
   db:
     image: postgres:15
     environment:
@@ -33,15 +14,25 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - backend
-  
+
   phanes:
     build:
-      context: pkg
+      context: .
       dockerfile: Dockerfile
     restart: on-failure
+    platform: linux/x86_64
+    ports:
+     - "8080:8080"
+    depends_on:
+      - db
     environment:
-      PHANES_DATABASE_USERNAME: ${PHANES_DATABASE_USERNAME}
-      PHANES_DATABASE_PASSWORD: ${P
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=myapp
+    networks:
+      - backend
 
 networks:
   backend:

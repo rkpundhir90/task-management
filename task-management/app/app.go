@@ -29,8 +29,6 @@ func (a *App) TaskInstanceService() service.TaskInstanceService {
 }
 
 func Build(db *gorm.DB, envConfig *config.EnvironmentConfiguration) *App {
-
-	// Repositories
 	taskInstanceRepository := repository.NewTaskInstanceRepository(envConfig, db)
 
 	taskInstanceService := service.NewTaskInstanceService(envConfig, taskInstanceRepository)
