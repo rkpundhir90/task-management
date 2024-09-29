@@ -8,7 +8,8 @@ Delete docker containers and volumes
 and then run the `docker compose up --build -d`
 
 ## DB Schema
-`CREATE TABLE IF NOT EXISTS users (
+`
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL
@@ -23,7 +24,8 @@ CREATE TABLE IF NOT EXISTS tasks (
     due_date DATE,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
-);`
+);
+`
 
 ## Swagger Document
 http://localhost:8080/docs/index.html
