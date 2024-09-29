@@ -19,6 +19,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - no-cache=true
     restart: on-failure
     platform: linux/x86_64
     ports:
@@ -30,7 +32,8 @@ services:
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=postgres
-      - DB_NAME=myapp
+      - DB_NAME=postgres
+      - SERVER_PORT=8080
     networks:
       - backend
 

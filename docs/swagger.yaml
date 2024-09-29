@@ -1,0 +1,38 @@
+definitions:
+  model.TaskInfo:
+    properties:
+      taskId:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /tasks:
+    get:
+      description: Retrieve all tasks or filter tasks by status, user, or due date.
+      parameters:
+      - description: Status
+        in: query
+        name: status
+        type: string
+      - description: Assigned user
+        in: query
+        name: assigned_to
+        type: string
+      - description: Due date
+        in: query
+        name: due_date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.TaskInfo'
+            type: array
+      summary: Retrieve tasks
+      tags:
+      - tasks
+swagger: "2.0"
