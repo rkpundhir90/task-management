@@ -1,4 +1,27 @@
 definitions:
+  model.CreateTaskRequest:
+    properties:
+      description:
+        type: string
+      due_date:
+        type: string
+      status:
+        enum:
+        - Pending
+        - In
+        - Progress
+        - Completed
+        type: string
+      title:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - due_date
+    - status
+    - title
+    - user_id
+    type: object
   model.Task:
     properties:
       description:
@@ -14,10 +37,95 @@ definitions:
       user_id:
         type: integer
     type: object
+  model.UpdateTaskRequest:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        enum:
+        - Pending
+        - In
+        - Progress
+        - Completed
+        type: string
+      title:
+        type: string
+    required:
+    - status
+    type: object
 info:
   contact: {}
 paths:
+  /tasks:
+    get:
+      description: Retrieve All Tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/model.Task'
+              type: array
+            type: array
+      summary: Retrieve All Tasks
+      tags:
+      - tasks
+    post:
+      description: Create a Task
+      parameters:
+      - description: Task to be created
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Create a Task
+      tags:
+      - tasks
+    put:
+      description: Update Task
+      parameters:
+      - description: Task to be updated
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Update Task
+      tags:
+      - tasks
   /tasks/{taskId}:
+    delete:
+      description: Delete Task by Id
+      parameters:
+      - description: Task ID
+        in: path
+        name: taskId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete Task by Id
+      tags:
+      - tasks
     get:
       description: Retrieve task by Id
       parameters:
