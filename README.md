@@ -41,19 +41,21 @@ http://localhost:8080/docs/index.html
 
 ### Get All Tasks
 
-`curl -X 'GET'
+```curl -X 'GET'
   'http://localhost:8080/v1/tasks'
-  -H 'accept: application/json'`
+  -H 'accept: application/json'
+```
 
 ### Get Task By Id
 
-`curl -X 'GET'
+```curl -X 'GET'
   'http://localhost:8080/v1/tasks/1'
-  -H 'accept: application/json'`
+  -H 'accept: application/json'
+```
 
 ### Create Task
 
-`curl -X 'POST'
+```curl -X 'POST'
   'http://localhost:8080/v1/tasks'
   -H 'accept: application/json'
   -H 'Content-Type: application/json'
@@ -63,11 +65,12 @@ http://localhost:8080/docs/index.html
   "status": "Pending",
   "title": "test",
   "user_id": 1
-}'`
+}'
+```
 
 ### Update Task
 
-`curl -X 'PUT'
+```curl -X 'PUT'
   'http://localhost:8080/v1/tasks'
   -H 'accept: application/json'
   -H 'Content-Type: application/json'
@@ -76,10 +79,12 @@ http://localhost:8080/docs/index.html
   "id": 1,
   "status": "Pending",
   "title": "Title"
-}'`
+}'
+```
 
 ### Delete Task
 
-`curl -X 'DELETE'
+```curl -X 'DELETE'
   'http://localhost:8080/v1/tasks/1'
-  -H 'accept: application/json'`
+  -H 'accept: application/json'
+```
