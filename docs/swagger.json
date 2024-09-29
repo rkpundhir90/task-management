@@ -4,34 +4,23 @@
         "contact": {}
     },
     "paths": {
-        "/tasks": {
+        "/tasks/{taskId}": {
             "get": {
-                "description": "Retrieve all tasks or filter tasks by status, user, or due date.",
+                "description": "Retrieve task by Id",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "tasks"
                 ],
-                "summary": "Retrieve tasks",
+                "summary": "Retrieve task by Id",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Status",
-                        "name": "status",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Assigned user",
-                        "name": "assigned_to",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Due date",
-                        "name": "due_date",
-                        "in": "query"
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "taskId",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -40,7 +29,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.TaskInfo"
+                                "$ref": "#/definitions/model.Task"
                             }
                         }
                     }
@@ -49,10 +38,25 @@
         }
     },
     "definitions": {
-        "model.TaskInfo": {
+        "model.Task": {
             "type": "object",
             "properties": {
-                "taskId": {
+                "description": {
+                    "type": "string"
+                },
+                "due_date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "integer"
                 }
             }

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rkpundhir90/task-management/task-management/config"
@@ -17,21 +18,29 @@ func NewRegisterTaskHandlers(envConfig *config.EnvironmentConfiguration, r *gin.
 	res := TaskManagementResource{envConfig, taskService}
 
 	// Register all routes with the handler functions
-	r.GET("/tasks/:taskId/tasks", res.GetTasksByTaskId)
+	r.GET("/tasks/:taskId", res.GetTasksByTaskId)
 
 }
 
-// GetTasks retrieves all tasks or filters by status, user, or due date
-// @Summary Retrieve tasks
-// @Description Retrieve all tasks or filter tasks by status, user, or due date.
+// GetTasksByTaskId retrieves the task by Id
+// @Summary Retrieve task by Id
+// @Description Retrieve task by Id
 // @Tags tasks
 // @Produce json
-// @Param status query string false "Status"
-// @Param assigned_to query string false "Assigned user"
-// @Param due_date query string false "Due date"
-// @Success 200 {array} model.TaskInfo
-// @Router /tasks [get]
+// @Param taskId path int true "Task ID"
+// @Success 200 {array} model.Task
+// @Router /tasks/{taskId} [get]
 func (r TaskManagementResource) GetTasksByTaskId(ctx *gin.Context) {
-	taskId := ctx.Param("taskId")
-	ctx.JSON(http.StatusOK, taskId)
+	taskIdParam := ctx.Param("taskId")
+	taskId, err := strconv.Atoi(taskIdParam)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid task ID"})
+		return
+	}
+	task, err := r.taskService.GetTaskById(ctx, taskId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, task)
 }

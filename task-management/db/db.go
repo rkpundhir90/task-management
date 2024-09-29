@@ -27,7 +27,6 @@ func InitDB(cfg config.EnvironmentConfiguration) (*gorm.DB, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer sqlDB.Close()
 
 	schemaFile, err := os.Open("./task-management/db/schema.sql")
 	if err != nil {

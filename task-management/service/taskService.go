@@ -9,7 +9,7 @@ import (
 )
 
 type TaskInstanceService interface {
-	GetTaskById(ctx context.Context, taskId int) (model.TaskInfo, error)
+	GetTaskById(ctx context.Context, taskId int) (model.Task, error)
 }
 
 type taskInstanceService struct {
@@ -27,6 +27,7 @@ func NewTaskInstanceService(
 	}
 }
 
-func (s taskInstanceService) GetTaskById(ctx context.Context, taskId int) (model.TaskInfo, error) {
-	return model.TaskInfo{TaskId: taskId}, nil
+func (s taskInstanceService) GetTaskById(ctx context.Context, taskId int) (model.Task, error) {
+	task, err := s.repository.GetTaskById(ctx, taskId)
+	return task, err
 }

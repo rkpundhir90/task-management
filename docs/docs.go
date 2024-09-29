@@ -15,34 +15,23 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/tasks": {
+        "/tasks/{taskId}": {
             "get": {
-                "description": "Retrieve all tasks or filter tasks by status, user, or due date.",
+                "description": "Retrieve task by Id",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "tasks"
                 ],
-                "summary": "Retrieve tasks",
+                "summary": "Retrieve task by Id",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Status",
-                        "name": "status",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Assigned user",
-                        "name": "assigned_to",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Due date",
-                        "name": "due_date",
-                        "in": "query"
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "taskId",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -51,7 +40,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.TaskInfo"
+                                "$ref": "#/definitions/model.Task"
                             }
                         }
                     }
@@ -60,10 +49,25 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "model.TaskInfo": {
+        "model.Task": {
             "type": "object",
             "properties": {
-                "taskId": {
+                "description": {
+                    "type": "string"
+                },
+                "due_date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "integer"
                 }
             }
@@ -73,12 +77,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
-	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Version:          "1.0.0",
+	Host:             "localhost:8080",
+	BasePath:         "/v1",
+	Schemes:          []string{"http"},
+	Title:            "Task Management API",
+	Description:      "API for managing tasks (CRUD operations)",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }
