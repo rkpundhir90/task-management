@@ -88,3 +88,36 @@ http://localhost:8080/docs/index.html
   'http://localhost:8080/v1/tasks/1'
   -H 'accept: application/json'
 ```
+
+## User Management APIs
+ - Create User: Endpoint to create a new user. A user has a name and email
+
+### GetAllUsers
+
+```
+curl -X 'GET'
+  'http://localhost:8080/v1/user'
+  -H 'accept: application/json'
+```
+
+### Get User By EmailId
+
+```
+curl -X 'GET'
+  'http://localhost:8080/v1/user/rkpundhir90%40gmail.com'
+  -H 'accept: application/json'
+```
+
+
+### Create User
+
+```
+curl -X 'POST' \
+  'http://localhost:8080/v1/user'
+  -H 'accept: application/json'
+  -H 'Content-Type: application/json'
+  -d '{
+  "email_id": "rkpundhir90@gmail.com",
+  "name": "Rohit Pundhir"
+}'
+```

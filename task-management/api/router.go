@@ -23,6 +23,7 @@ import (
 func NewRouter(a app.Interface, envConfig *config.EnvironmentConfiguration) *gin.Engine {
 
 	var taskInstanceService = a.TaskInstanceService()
+	var userInstanceService = a.UserInstanceService()
 
 	router := gin.Default()
 	router.Use(gin.Recovery())
@@ -36,6 +37,7 @@ func NewRouter(a app.Interface, envConfig *config.EnvironmentConfiguration) *gin
 	v1 := router.Group("/v1")
 
 	handler.NewRegisterTaskHandlers(envConfig, v1, taskInstanceService)
+	handler.NewRegisterUserHandlers(envConfig, v1, userInstanceService)
 
 	_ = router.Run(":" + envConfig.ServerPort)
 

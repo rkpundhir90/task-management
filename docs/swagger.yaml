@@ -22,6 +22,16 @@ definitions:
     - title
     - user_id
     type: object
+  model.CreateUserRequest:
+    properties:
+      emailId:
+        type: string
+      name:
+        type: string
+    required:
+    - emailId
+    - name
+    type: object
   model.Task:
     properties:
       description:
@@ -54,6 +64,15 @@ definitions:
         type: string
     required:
     - status
+    type: object
+  model.User:
+    properties:
+      emailId:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
     type: object
 info:
   contact: {}
@@ -146,4 +165,57 @@ paths:
       summary: Retrieve task by Id
       tags:
       - tasks
+  /user:
+    get:
+      description: Retrieve all the users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/model.User'
+              type: array
+            type: array
+      summary: Retrieve all the users
+      tags:
+      - users
+    post:
+      description: Create a user
+      parameters:
+      - description: User to be created
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Create a user
+      tags:
+      - users
+  /user/{emailId}:
+    get:
+      description: Get User by email id
+      parameters:
+      - description: Email ID
+        in: path
+        name: emailId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+      summary: Get User by email id
+      tags:
+      - users
 swagger: "2.0"

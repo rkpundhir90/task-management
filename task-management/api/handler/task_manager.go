@@ -89,7 +89,7 @@ func (r TaskManagementResource) DeleteTaskById(ctx *gin.Context) {
 	ctx.JSON(http.StatusNoContent, nil)
 }
 
-// DeleteTaskById create a task
+// CreateTask create a task
 // @Summary Create a Task
 // @Description Create a Task
 // @Tags tasks
